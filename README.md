@@ -98,4 +98,17 @@ This will run the application on `http://localhost:8000`. You can access the pro
 
 ---
 
+Then login to the website 
+
+For the manager user:
+- Email : `manager@example.com`
+- Password : `password`
+
+For the teammate user:
+- Email : `teammate@example.com`
+- Password : `password`
+
+
+---
+
 Now you can access and run your **Task Management System** locally!
