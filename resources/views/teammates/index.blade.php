@@ -1,23 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Teammates') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
+                                <h1 class="text-base font-semibold leading-6 dark:text-white">Teammates</h1>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <a href="{{route('users.create')}}"
-                                   class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
+                                <a href="{{route('teammates.create')}}"
+                                   class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold dark:text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
                                     user</a>
                             </div>
                         </div>
@@ -28,15 +27,14 @@
                                         <thead>
                                         <tr>
                                             <th scope="col"
-                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                                                First Name
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold dark:text-white sm:pl-0">
+                                               Name
                                             </th>
                                             <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last
-                                                Name
+                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Employee ID
                                             </th>
                                             <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email
+                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Email
                                             </th>
                                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                                                 <a class="sr-only">Edit</a>
@@ -45,33 +43,32 @@
                                         </thead>
                                         <tbody class="divide-y divide-gray-200">
 
-                                        @foreach($users as $user)
-                                            <tr>
-                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{$user->first_name}}</td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$user->last_name}}</td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$user->email}}</td>
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                    <a href="{{route('users.edit',$user)}}"
-                                                       class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                                    |
-                                                    <form method="POST"
-                                                          class="inline-block"
-                                                          action="{{route('users.destroy',$user)}}"
-                                                          onsubmit="return confirm('Are you sure?')">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit" class="text-red-600 hover:text-red-900">
-                                                            Delete
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <!-- More people... -->
+                                       @foreach($teammates as $teammate)
+                                           <tr>
+                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium dark:text-white sm:pl-0">{{$teammate->name}}</td>
+                                              <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$teammate->employee_id}}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$teammate->email}}</td>
+                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                                  <a href="{{route('teammates.edit',$teammate)}}"
+                                                    class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                |
+                                                <form method="POST"
+                                                        class="inline-block"
+                                                        action="{{route('teammates.destroy',$teammate)}}"
+                                                     onsubmit="return confirm('Are you sure?')">
+                                                    @method('DELETE')
+                                                      @csrf
+                                                      <button type="submit" class="text-red-600 hover:text-red-900">
+                                                          Delete
+                                                    </button>
+                                                  </form>
+                                            </td>
+                                          </tr>
+                                      @endforeach
                                         </tbody>
                                     </table>
                                     <div class="mt-4">
-                                        {{ $users->links() }}
+                                       {{ $teammates->links() }}
                                     </div>
                                 </div>
                             </div>

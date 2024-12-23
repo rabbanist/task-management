@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('employee_id')->unique();
+            $table->string('position')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->enum('role',['manager','teammate'])->default('teammate');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

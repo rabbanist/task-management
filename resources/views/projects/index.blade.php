@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Teammates') }}
+            {{ __('Projects') }}
         </h2>
     </x-slot>
 
@@ -12,12 +12,12 @@
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-base font-semibold leading-6 dark:text-white">Teammates</h1>
+                                <h1 class="text-base font-semibold leading-6 dark:text-white">Projects</h1>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <a href="{{route('teammates.create')}}"
+                                <a href="{{route('projects.create')}}"
                                    class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold dark:text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
-                                    user</a>
+                                    Project</a>
                             </div>
                         </div>
                         <div class="mt-8 flow-root">
@@ -28,13 +28,13 @@
                                         <tr>
                                             <th scope="col"
                                                 class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold dark:text-white sm:pl-0">
-                                               Name
+                                               Project Name
                                             </th>
                                             <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Employee ID
+                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Project Code
                                             </th>
                                             <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Email
+                                                class="px-3 py-3.5 text-left text-sm font-semibold dark:text-white">Assign By
                                             </th>
                                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                                                 <a class="sr-only">Edit</a>
@@ -43,18 +43,18 @@
                                         </thead>
                                         <tbody class="divide-y divide-gray-200">
 
-                                       @foreach($teammates as $teammate)
+                                       @foreach($projects as $project)
                                            <tr>
-                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium dark:text-white sm:pl-0">{{$teammate->name}}</td>
-                                              <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$teammate->employee_id}}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$teammate->email}}</td>
+                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium dark:text-white sm:pl-0">{{$project->name}}</td>
+                                              <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$project->project_code}}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm dark:text-white">{{$project->manager->name}}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                  <a href="{{route('teammates.edit',$teammate)}}"
+                                                  <a href="{{route('projects.edit',$project)}}"
                                                     class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                                 |
                                                 <form method="POST"
                                                         class="inline-block"
-                                                        action="{{route('teammates.destroy',$teammate)}}"
+                                                        action="{{route('projects.destroy',$project)}}"
                                                      onsubmit="return confirm('Are you sure?')">
                                                     @method('DELETE')
                                                       @csrf
@@ -68,7 +68,7 @@
                                         </tbody>
                                     </table>
                                     <div class="mt-4">
-                                       {{ $teammates->links() }}
+                                       {{ $projects->links() }}
                                     </div>
                                 </div>
                             </div>
