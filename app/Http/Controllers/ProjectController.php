@@ -13,10 +13,15 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with('manager')->paginate(10);
-        return view('projects.index',compact('projects'));
+        $query = Project::query();
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        $projects = $query->paginate(5);
+        return view('projects.index', compact('projects'));
+
     }
 
     /**
@@ -34,6 +39,7 @@ class ProjectController extends Controller
     {
         Project::create($request->validated());
         return redirect()->route('projects.index')->with('success', 'Project created successfully');
+
     }
 
     /**
@@ -56,9 +62,13 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
-    {
+        public function destroy(Project $project)
+        {
+        if ($project->tasks()->exists()) {
+            return redirect()->route('projects.index')->with('error', 'Cannot delete project with associated tasks.');
+        }
         $project->delete();
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
-    }
+      }
+
 }

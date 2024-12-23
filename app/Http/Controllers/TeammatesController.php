@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\UserRequestStore;
@@ -14,9 +15,10 @@ class TeammatesController extends Controller
      */
     public function index()
     {
-        $teammates = User::where('role', 'teammate')->paginate(10);
+        $teammates = User::where('role', 'teammate')->paginate(5);
         return view('teammates.index', compact('teammates'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -51,12 +53,18 @@ class TeammatesController extends Controller
         $teammate->update($request->validated());
         return redirect()->route('teammates.index')->with('success', 'Teammate updated successfully');
     }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $teammate)
+    public function destroy(User $teammate, Task $task)
     {
+        $teammate->load('tasks');
+        if ($teammate->tasks->count() > 0) {
+            return redirect()->route('teammates.index')->with('error', 'Teammate has assigned tasks and cannot be deleted');
+        }
         $teammate->delete();
         return redirect()->route('teammates.index')->with('success', 'Teammate deleted successfully');
+
     }
 }

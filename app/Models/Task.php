@@ -14,7 +14,13 @@ class Task extends Model
         'description',
         'status',
         'project_id',
+        'assign_to'
     ];
+
+    public function assign()
+    {
+        return $this->belongsTo(User::class, 'assign_to');
+    }
 
     public function project()
     {

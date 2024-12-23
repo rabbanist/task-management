@@ -17,7 +17,9 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->sentence(3),
+            'project_code' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{3}'),
+            'manager_id' => $this->faker->randomElement(\App\Models\User::where('role', 'manager')->pluck('id')->toArray()),  
         ];
     }
 }

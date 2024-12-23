@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('project_id')->constrained('projects');
-            $table->foreignId('assignee_to')->constrained('users');
+            $table->foreignId('assign_to')->constrained('users');
             $table->text('description')->nullable();
-            $table->enum('status', ['pending', 'working', 'done']);
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

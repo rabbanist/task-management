@@ -23,7 +23,7 @@ class ProjectRequestStore extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'project_code' => ['required', 'integer', 'unique:projects,project_code'],
+            'project_code' => ['required', 'unique:projects,project_code'],
             'manager_id' => ['required'],
         ];
     }

@@ -23,7 +23,7 @@ class ProjectRequestUpdate extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'project_code' => 'required|integer',
+            'project_code' => 'required',
             'manager_id' => 'required',
         ];
     }

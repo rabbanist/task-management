@@ -12,22 +12,33 @@ use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
-
-    //only manager can show all tasks and teammate can show only assigned tasks
-
-
     public function index(Request $request)
     {
-        $query = Task::query()->with('project');
+        $query = Task::query()->with('project', 'assign'); // Include related models
+    
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('project_id', 'like', '%' . $request->search . '%')
-                ->orWhere('status', 'like', '%' . $request->search . '%');
+            $search = $request->search;
+    
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%') // Search in task name
+                    ->orWhere('status', 'like', '%' . $search . '%') // Search in task status
+                    ->orWhereHas('project', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%'); // Search in project name
+                    })
+                    ->orWhereHas('assign', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%'); // Search in assigned user name
+                    });
+            });
         }
-        $tasks = $query->paginate(5);
-        return view('tasks.index',compact('tasks'));
-    }
 
+        if (auth()->user()->role == 'teammate') {
+            $query->where('assign_to', auth()->id()); // show only tasks assigned to the current user
+        }
+
+        $tasks = $query->paginate(5);
+        return view('tasks.index', compact('tasks'));
+    }
+    
 
     /**
      * Show the form for creating a new resource.s
